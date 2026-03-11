@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>CloseFlow | High-Ticket Sales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- BAZA --- */
+        html {
+            background-color: #000;
+            overscroll-behavior: none;
+        }
+        body { 
+            color: #fff; font-family: 'Inter', sans-serif; 
+            margin: 0; padding: 0; overflow-x: hidden; scrollbar-width: none; 
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, #001d3d 0%, #000b16 45%, #000000 85%);
+            z-index: -1;
+        }
+        body::-webkit-scrollbar { display: none; }
+        * { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
+
+        /* --- ANIMACJA POJAWIANIA SIĘ (Scroll Reveal) --- */
+        .hidden-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.4s cubic-bezier(0.22, 1, 0.36, 1), transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        .section-visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* --- KURSOR GLOW --- */
+        #cursor-glow {
+            width: 80px; height: 80px;
+            background: radial-gradient(circle, rgba(0, 71, 171, 0.25) 0%, transparent 70%);
+            border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000;
+            transform: translate(-50%, -50%); transition: opacity 0.3s ease;
+            display: none;
+        }
+
+        /* --- TYPOGRAFIA --- */
+        .serif-premium { 
+            font-family: 'Cormorant Garamond', serif !important; 
+            font-style: normal !important; /* Wymuszenie braku kursywy */
+            letter-spacing: -0.01em;
+            line-height: 1.25; 
+            font-weight: 600;
+        }
+        .brand-logo { color: #5da9ff; letter-spacing: 0.6em; font-weight: 300; text-transform: uppercase; font-size: 13px; }
+
+        /* --- VSL SECTION --- */
+        .vsl-section { padding-bottom: 20px; min-height: auto; display: flex; flex-direction: column; justify-content: flex-start; }
+
+        .pill-status {
+            border: 1px solid rgba(93, 169, 255, 0.3); 
+            background: rgba(0, 33, 71, 0.4);
+            color: #99ccff; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.25em;
+            padding: 14px 32px; border-radius: 50px; display: inline-flex; align-items: center;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 71, 171, 0.2);
+            animation: emanate 3s ease-in-out infinite;
+        }
+
+        @keyframes emanate {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 71, 171, 0.2); border-color: rgba(93, 169, 255, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(0, 71, 171, 0.6); border-color: rgba(93, 169, 255, 0.6); }
+        }
+
+        .vsl-container {
+            max-width: 960px; margin: 0 auto; position: relative;
+            border-radius: 2.5rem; overflow: hidden;
+            background: #000; border: 1px solid rgba(255,255,255,0.08);
+            aspect-ratio: 16/9; 
+            animation: vsl-glow 5s infinite alternate;
+        }
+
+        @keyframes vsl-glow {
+            0% { box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 20px rgba(0, 71, 171, 0.1); }
+            100% { box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 60px rgba(0, 71, 171, 0.3); }
+        }
+
+        #yt-player { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+
+        #video-overlay {
+            position: absolute; inset: 0; z-index: 10;
+            backdrop-filter: blur(40px) saturate(150%); -webkit-backdrop-filter: blur(40px) saturate(150%);
+            background: rgba(0,0,0,0.6);
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.8s ease;
+        }
+
+        .liquid-glass-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(93, 169, 255, 0.3); border-radius: 100px;
+            padding: 20px 45px; color: #fff; font-weight: 500; font-size: 17px;
+            display: flex; align-items: center; gap: 15px; cursor: pointer;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+            animation: emanate 3s ease-in-out infinite;
+        }
+
+        .play-icon-bg {
+            width: 42px; height: 42px; border-radius: 50%;
+            background: #002b5c; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        /* --- CTA --- */
+        .cta-premium {
+            background: #002b5c; color: #fff; padding: 22px 60px; border-radius: 100px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; font-size: 12px;
+            display: inline-block; transition: 0.4s; text-decoration: none;
+            box-shadow: 0 15px 40px rgba(0, 20, 40, 0.8);
+            border: 1px solid rgba(93, 169, 255, 0.2);
+        }
+        .cta-premium:hover { 
+            transform: translateY(-5px); 
+            background: #003d82;
+            box-shadow: 0 25px 50px rgba(0, 33, 71, 0.7); 
+            border-color: rgba(93, 169, 255, 0.4);
+        }
+
+        /* --- SEKCJA OPISOWA --- */
+        .description-premium {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .description-premium::before,
+        .description-premium::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(93, 169, 255, 0.3) 50%, transparent 100%);
+        }
+
+        .description-premium::before { top: 0; }
+        .description-premium::after { bottom: 0; }
+
+        .desc-title {
+            color: #5da9ff;
+            font-family: 'Cormorant Garamond', serif !important;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            font-style: normal; /* Usunięto italic */
+        }
+
+        .desc-content {
+            color: rgba(255, 255, 255, 0.55);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            line-height: 2;
+            font-weight: 200;
+            letter-spacing: 0.01em;
+        }
+
+        .desc-highlight {
+            color: #fff;
+            font-weight: 600;
+            display: block;
+            margin: 1.5rem 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+        }
+
+        /* --- SEKCJA GAIN (FILARY) --- */
+        .pillars-container {
+            position: relative;
+        }
+
+        .pillar-main-line {
+            position: absolute;
+            left: 25px; 
+            top: 25px; 
+            bottom: 40px; 
+            width: 1px;
+            background: linear-gradient(to bottom, 
+                rgba(93, 169, 255, 0.8) 0%, 
+                rgba(93, 169, 255, 0.2) 50%, 
+                rgba(93, 169, 255, 0.8) 100%
+            );
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .pillar-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            position: relative;
+            padding-bottom: 2.5rem;
+            z-index: 2;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .pillar-row.reveal-active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            background: linear-gradient(135deg, rgba(93, 169, 255, 0.1) 0%, rgba(93, 169, 255, 0.03) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(93, 169, 255, 0.2);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: inset 0 0 12px rgba(93, 169, 255, 0.05), 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .icon-box::before {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.6s;
+        }
+
+        .icon-box:hover {
+            transform: scale(1.1) translateY(-5px);
+            border-color: rgba(93, 169, 255, 0.5);
+            background: linear-gradient(135deg, rgba(93, 169, 255, 0.15) 0%, rgba(93, 169, 255, 0.08) 100%);
+        }
+
+        .icon-box:hover::before { left: 100%; }
+
+        .pillar-content { padding-top: 0.5rem; }
+
+        .pillar-number {
+            font-size: 10px;
+            color: rgba(93, 169, 255, 0.6);
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        /* --- TALLY & FINAL CTA --- */
+        .form-frame-wrapper {
+            max-width: 560px; margin: 0 auto; height: 600px; border-radius: 40px;
+            background: #000; border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden; position: relative;
+        }
+
+        .final-cta-btn {
+            background: linear-gradient(135deg, #002b5c 0%, #0047ab 100%);
+            color: #fff;
+            padding: 22px 55px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            border: 1px solid rgba(93, 169, 255, 0.3);
+            text-decoration: none;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .final-cta-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: #5da9ff;
+            background: linear-gradient(135deg, #003673 0%, #0056cc 100%);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-glow"></div>
+
+    <div class="vsl-section">
+        <nav class="pt-4 pb-6 text-center">
+            <h1 class="brand-logo">CloseFlow</h1>
+        </nav>
+
+        <section class="px-6">
+            <div class="max-w-6xl mx-auto text-center">
+                <div class="mb-8">
+                    <div class="pill-status">• Złóż aplikację — liczba miejsc ograniczona •</div>
+                </div>
+                
+                <div class="vsl-container" id="vsl-box">
+                    <div id="video-overlay">
+                        <button id="vsl-trigger" class="liquid-glass-btn" onclick="startVSL()">
+                            <span class="play-icon-bg">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            </span>
+                            <span id="btn-text">Odsłuchaj</span>
+                        </button>
+                    </div>
+                    <div id="yt-player"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="hidden-section py-8 px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="serif-premium text-[26px] md:text-5xl text-white mb-4">
+                Nie każdy dostaje taką szansę.
+            </h2>
+            <p class="serif-premium text-[18px] md:text-3xl text-white mb-2 leading-tight">
+                Prawdziwy trening sprzedaży, realna zmiana życia
+            </p>
+            <p class="serif-premium text-[18px] md:text-3xl text-white mb-8 leading-tight">
+                oraz możliwość wejścia do świata <span style="color: #7ab8ff;">high-ticket</span>
+            </p>
+            <p class="text-zinc-500 text-[9px] md:text-xs mb-8 tracking-[0.3em] font-light opacity-70 uppercase">
+                wypełnij formularz — liczba miejsc ograniczona
+            </p>
+            <a href="#aplikuj" class="cta-premium scale-90 md:scale-100">Zacznij zarabiać →</a>
+        </div>
+    </section>
+
+    <section class="hidden-section py-12 px-6 text-center">
+        <div class="description-premium">
+            <h3 class="desc-title">CLOSEFLOW</h3>
+            <div class="desc-content">
+                <p>Closeflow to miejsce dla osób, które chcą zamykać każdą rozmowę sprzedażową na wyższym poziomie.</p>
+                <span class="desc-highlight">To nie kurs, to nie szkolenie.</span>
+                <p>To konkretne wsparcie, prowadzenie i doradztwo dla tych, którzy poważnie myślą o wysokich prowizjach w modelu high-ticket.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-6 overflow-hidden">
+        <div class="max-w-2xl mx-auto">
+            <div class="mb-10 hidden-section">
+                <h2 class="serif-premium text-4xl md:text-6xl text-white mb-4">Co <span style="color: #5da9ff;">Zyskujesz</span></h2>
+                <p class="text-zinc-500 uppercase tracking-widest text-xs">Cztery filary zarezerwowane dla podopiecznych</p>
+            </div>
+
+            <div class="pillars-container" id="pillars-trigger">
+                <div class="pillar-main-line"></div>
+
+                <div class="pillar-row" data-delay="100">
+                    <div class="icon-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5da9ff" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <div class="pillar-content">
+                        <h4 class="text-lg font-medium mb-1 text-white"><span class="pillar-number">01</span> Audyt personalny 360°</h4>
+                        <p class="text-zinc-500 text-sm leading-relaxed max-w-md">Dogłębna analiza Twoich rozmów lub symulacja sprzedaży "na żywo" aby wyłapać błędy kosztujące Cię tysiące złotych.</p>
+                    </div>
+                </div>
+
+                <div class="pillar-row" data-delay="300">
+                    <div class="icon-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5da9ff" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <div class="pillar-content">
+                        <h4 class="text-lg font-medium mb-1 text-white"><span class="pillar-number">02</span> Strategia tworzenia marki personalnej</h4>
+                        <p class="text-zinc-500 text-sm leading-relaxed max-w-md">Jak budować autorytet w Social Mediach by przyciągać leady o wysokiej jakości bez "coldcallingu"</p>
+                    </div>
+                </div>
+
+                <div class="pillar-row" data-delay="500">
+                    <div class="icon-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5da9ff" stroke-width="1.5"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+                    </div>
+                    <div class="pillar-content">
+                        <h4 class="text-lg font-medium mb-1 text-white"><span class="pillar-number">03</span> Schemat skalowania sprzedaży</h4>
+                        <p class="text-zinc-500 text-sm leading-relaxed max-w-md">Plan przejścia z chaotycznych transakcji na powtarzalne wyniki 5- i 6-cyfrowe miesięcznie</p>
+                    </div>
+                </div>
+
+                <div class="pillar-row" data-delay="700">
+                    <div class="icon-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5da9ff" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="pillar-content">
+                        <h4 class="text-lg font-medium mb-1 text-white"><span class="pillar-number">04</span> Wsparcie 1:1</h4>
+                        <p class="text-zinc-500 text-sm leading-relaxed max-w-md">Bezpośredni kontakt oraz odpowiedzi na każde Twoje pytanie </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="aplikuj" class="hidden-section py-12 px-6 border-t border-white/5 text-center">
+        <div class="mb-10">
+            <div class="pill-status">• Twój pierwszy krok do wolności •</div>
+        </div>
+        <div class="form-frame-wrapper" id="tally-box">
+            <iframe src="https://tally.so/r/Xxe8jV?hideTitle=1&transparentBackground=1" width="100%" height="650" frameborder="0"></iframe>
+        </div>
+    </section>
+
+    <section class="hidden-section py-12 px-6 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="serif-premium text-5xl md:text-7xl mb-8 text-white">Dołącz do Closeflow</h2>
+            <p class="text-[#99ccff] text-lg mb-8 font-light leading-relaxed opacity-80">
+                Jeżeli wniosek zostanie rozpatrzony pozytywnie<br class="hidden md:block"> ktoś z naszego zespołu się z Tobą skontaktuje.
+            </p>
+            <a href="#aplikuj" class="final-cta-btn">
+                <span>Zmień swoje życie </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </section>
+
+    <footer class="hidden-section py-10 text-center border-t border-white/5 opacity-40">
+        <p class="text-[10px] tracking-[0.5em] uppercase">© 2026 CloseFlow</p>
+    </footer>
+
+    <script>
+        let player;
+        let isPlayerReady = false;
+
+        const glow = document.getElementById('cursor-glow');
+        const tallyBox = document.getElementById('tally-box');
+        const vslBox = document.getElementById('vsl-box');
+        const overlay = document.getElementById('video-overlay');
+
+        // Scroll reveal
+        const revealOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.hidden-section').forEach(section => {
+            revealOnScroll.observe(section);
+        });
+
+        // Pillar animation
+        const pillarObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const rows = entry.target.querySelectorAll('.pillar-row');
+                    rows.forEach(row => {
+                        setTimeout(() => {
+                            row.classList.add('reveal-active');
+                        }, parseInt(row.dataset.delay));
+                    });
+                }
+            });
+        }, { threshold: 0.2 });
+
+        const pillarsTrigger = document.getElementById('pillars-trigger');
+        if(pillarsTrigger) pillarObserver.observe(pillarsTrigger);
+
+        // YouTube API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                videoId: 'YTSe4sZ0g_Q',
+                playerVars: { 
+                    'autoplay': 0, 'controls': 1, 'rel': 0, 'modestbranding': 1,
+                    'iv_load_policy': 3, 'showinfo': 0, 'playsinline': 1 
+                },
+                events: { 
+                    'onReady': (e) => { isPlayerReady = true; e.target.mute(); },
+                    'onStateChange': (e) => {
+                        if (e.data == 1) { 
+                            overlay.style.opacity = '0';
+                            setTimeout(() => { overlay.style.display = 'none'; }, 600);
+                        }
+                    }
+                }
+            });
+        }
+
+        function startVSL() {
+            if (isPlayerReady && player) {
+                player.unMute();
+                player.playVideo();
+            }
+        }
+
+        // Mouse glow logic
+        if (window.matchMedia("(pointer: fine)").matches) {
+            glow.style.display = 'block';
+            document.addEventListener('mousemove', (e) => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+                
+                const fRect = tallyBox.getBoundingClientRect();
+                const vRect = vslBox.getBoundingClientRect();
+                
+                const isOverForm = (e.clientX >= fRect.left && e.clientX <= fRect.right && e.clientY >= fRect.top && e.clientY <= fRect.bottom);
+                const isOverVideo = (e.clientX >= vRect.left && e.clientX <= vRect.right && e.clientY >= vRect.top && e.clientY <= vRect.bottom);
+                
+                glow.style.opacity = (isOverForm || isOverVideo) ? '0' : '1';
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
