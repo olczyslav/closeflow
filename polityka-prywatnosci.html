@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polityka prywatności — Olek</title>
+<meta name="description" content="Polityka prywatności i informacja o przetwarzaniu danych osobowych (RODO).">
+<meta name="robots" content="index, follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:      #0A0E1A;
+  --ink-2:    #10162A;
+  --line:     rgba(255,255,255,.09);
+  --line-2:   rgba(255,255,255,.16);
+  --gold:     #F2B84B;
+  --gold-hi:  #FFD786;
+  --gold-deep:#C98A25;
+  --text:     #E7E9F1;
+  --muted:    #949DB6;
+  --muted-2:  #6C7590;
+
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body:    "Inter", system-ui, sans-serif;
+  --font-mono:    "Space Mono", ui-monospace, monospace;
+
+  --r-lg: 22px;
+  --r-md: 14px;
+  --maxw: 820px;
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:var(--font-body);
+  background:var(--ink);
+  color:var(--text);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+  overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(700px 500px at 85% -10%, rgba(242,184,75,.13), transparent 60%),
+    radial-gradient(600px 600px at 5% 8%, rgba(70,110,220,.09), transparent 62%);
+}
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+
+/* NAV */
+.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 0; margin-bottom:10px;
+}
+.brand{
+  font-family:var(--font-display); font-weight:800; font-size:19px;
+  letter-spacing:-.01em; display:flex; align-items:center; gap:10px;
+  color:var(--text); text-decoration:none;
+}
+.brand .dot{
+  width:11px; height:11px; border-radius:3px;
+  background:linear-gradient(135deg,var(--gold-hi),var(--gold-deep));
+  box-shadow:0 0 18px rgba(242,184,75,.6);
+}
+.back{
+  font-family:var(--font-mono); font-size:12px; color:var(--muted);
+  text-decoration:none; letter-spacing:.04em;
+  border:1px solid var(--line-2); border-radius:10px; padding:8px 14px;
+  transition:border-color .2s, color .2s;
+}
+.back:hover{ color:var(--gold); border-color:rgba(242,184,75,.4); }
+
+/* HEAD */
+header.head{ padding:26px 0 34px; border-bottom:1px solid var(--line); margin-bottom:38px; }
+.kicker{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--gold);
+}
+h1{
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.06;
+  letter-spacing:-.025em; margin:14px 0 14px;
+}
+.updated{ font-family:var(--font-mono); font-size:12px; color:var(--muted-2); }
+.intro{ color:var(--muted); margin-top:16px; font-size:15.5px; }
+
+/* TOC */
+.toc{
+  background:linear-gradient(180deg, rgba(22,30,56,.6), rgba(14,20,38,.5));
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:22px 24px; margin-bottom:40px;
+}
+.toc h2{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--muted); font-weight:400; margin-bottom:14px;
+}
+.toc ol{ margin:0; padding-left:20px; }
+.toc li{ margin-bottom:7px; font-size:14.5px; }
+.toc a{ color:var(--text); text-decoration:none; }
+.toc a:hover{ color:var(--gold); text-decoration:underline; }
+
+/* SECTIONS */
+section{ margin-bottom:38px; scroll-margin-top:24px; }
+h2.sec{
+  font-family:var(--font-display); font-weight:700;
+  font-size:1.32rem; letter-spacing:-.015em; margin-bottom:14px;
+  display:flex; align-items:baseline; gap:12px;
+}
+h2.sec .n{
+  font-family:var(--font-mono); font-size:12px; color:var(--gold);
+  letter-spacing:.08em; flex:0 0 auto;
+}
+p{ color:var(--muted); margin-bottom:13px; font-size:15.2px; }
+p strong, li strong{ color:var(--text); font-weight:600; }
+ul, ol.list{ margin:0 0 14px 0; padding-left:22px; }
+li{ color:var(--muted); margin-bottom:9px; font-size:15.2px; }
+a.link{ color:var(--gold); text-decoration:none; }
+a.link:hover{ text-decoration:underline; }
+
+/* CARD (admin) */
+.card{
+  background:linear-gradient(180deg, rgba(22,30,56,.72), rgba(14,20,38,.6));
+  border:1px solid var(--line-2);
+  border-radius:var(--r-lg);
+  padding:24px 26px; margin-bottom:14px;
+}
+.card .row{ display:flex; gap:14px; padding:9px 0; border-bottom:1px solid var(--line); font-size:15px; }
+.card .row:last-child{ border-bottom:none; }
+.card .k{
+  flex:0 0 150px; color:var(--muted-2);
+  font-family:var(--font-mono); font-size:11.5px; letter-spacing:.06em;
+  text-transform:uppercase; padding-top:3px;
+}
+.card .v{ color:var(--text); }
+
+/* TABLE-ish rights */
+.rights{ display:grid; gap:11px; }
+.right{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  padding:14px 16px;
+  background:rgba(255,255,255,.02);
+}
+.right b{ color:var(--text); display:block; margin-bottom:3px; font-size:15px; }
+.right span{ color:var(--muted); font-size:14.2px; }
+
+/* NOTE */
+.note{
+  border-left:3px solid var(--gold);
+  background:rgba(242,184,75,.06);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+  padding:16px 18px; margin:18px 0;
+}
+.note p{ margin:0; color:var(--text); font-size:14.6px; }
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--line);
+  padding:30px 0 50px; margin-top:46px;
+}
+.frow{ display:flex; justify-content:space-between; align-items:center; gap:18px; flex-wrap:wrap; }
+footer p{
+  font-family:var(--font-mono); font-size:12px; color:var(--muted-2); margin:0;
+}
+footer a{ color:var(--muted); text-decoration:none; font-size:12.5px; }
+footer a:hover{ color:var(--gold); }
+
+@media(max-width:600px){
+  .wrap{ padding:0 18px; }
+  .card .row{ flex-direction:column; gap:3px; }
+  .card .k{ flex:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <a class="brand" href="index.html"><span class="dot"></span>Olek</a>
+    <a class="back" href="index.html">← Powrót na stronę</a>
+  </nav>
+
+  <header class="head">
+    <span class="kicker">Dokument informacyjny</span>
+    <h1>Polityka prywatności</h1>
+    <p class="updated">Ostatnia aktualizacja: 15 lipca 2026</p>
+    <p class="intro">Ten dokument wyjaśnia, kto przetwarza Twoje dane osobowe podane w formularzu na tej stronie, w jakim celu, jak długo i jakie masz z tego tytułu prawa. Spełnia obowiązek informacyjny wynikający z art. 13 RODO.</p>
+  </header>
+
+  <div class="toc">
+    <h2>Spis treści</h2>
+    <ol>
+      <li><a href="#administrator">Kto jest administratorem danych</a></li>
+      <li><a href="#dane">Jakie dane zbieram</a></li>
+      <li><a href="#cel">Cel i podstawa prawna przetwarzania</a></li>
+      <li><a href="#dobrowolnosc">Dobrowolność podania danych</a></li>
+      <li><a href="#okres">Jak długo przechowuję dane</a></li>
+      <li><a href="#odbiorcy">Komu dane są udostępniane</a></li>
+      <li><a href="#eog">Przekazywanie danych poza EOG</a></li>
+      <li><a href="#prawa">Twoje prawa</a></li>
+      <li><a href="#skarga">Prawo skargi do PUODO</a></li>
+      <li><a href="#profilowanie">Profilowanie i decyzje automatyczne</a></li>
+      <li><a href="#cookies">Pliki cookies i dane techniczne</a></li>
+      <li><a href="#bezpieczenstwo">Bezpieczeństwo danych</a></li>
+      <li><a href="#zmiany">Zmiany polityki prywatności</a></li>
+    </ol>
+  </div>
+
+  <!-- 1 -->
+  <section id="administrator">
+    <h2 class="sec"><span class="n">01</span> Kto jest administratorem danych</h2>
+    <p>Administratorem Twoich danych osobowych, czyli podmiotem, który decyduje o tym, w jaki sposób i w jakim celu są one przetwarzane, jest:</p>
+    <div class="card">
+      <div class="row"><span class="k">Administrator</span><span class="v"><strong>Oliwier Szczyrbowski</strong> — osoba fizyczna (nieprowadząca działalności gospodarczej w zakresie tej strony)</span></div>
+      <div class="row"><span class="k">Strona</span><span class="v">closeflow.pl</span></div>
+      <div class="row"><span class="k">Kontakt</span><span class="v"><a class="link" href="mailto:oleksalesbiznes@gmail.com">oleksalesbiznes@gmail.com</a> </span></div>
+    </div>
+    <p>We wszystkich sprawach dotyczących Twoich danych osobowych możesz skontaktować się ze mną pod powyższym adresem e-mail.</p>
+    <p>Nie powołałem Inspektora Ochrony Danych (IOD) — nie ma takiego obowiązku w przypadku przetwarzania o tej skali i charakterze.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="dane">
+    <h2 class="sec"><span class="n">02</span> Jakie dane zbieram</h2>
+    <p>Zbieram wyłącznie dane, które sam/sama podajesz w formularzu na stronie:</p>
+    <ul>
+      <li><strong>Imię</strong> — żeby wiedzieć, jak się do Ciebie zwracać.</li>
+      <li><strong>Adres e-mail</strong> — jako kanał kontaktu.</li>
+      <li><strong>Numer telefonu</strong> — jako alternatywny kanał kontaktu.</li>
+      <li><strong>Data i godzina wysłania formularza</strong> — zapisywana automatycznie, jako dowód udzielenia zgody (tzw. rozliczalność zgody, art. 7 ust. 1 RODO).</li>
+    </ul>
+    <p>Nie zbieram żadnych danych wrażliwych (tzw. szczególnych kategorii danych, o których mowa w art. 9 RODO), takich jak dane o zdrowiu, poglądach czy przekonaniach.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="cel">
+    <h2 class="sec"><span class="n">03</span> Cel i podstawa prawna przetwarzania</h2>
+    <p>Twoje dane przetwarzam w dwóch celach:</p>
+    <ul>
+      <li><strong>Udostępnienie darmowego ebooka</strong> oraz obsługa Twojego zgłoszenia.</li>
+      <li><strong>Kontakt z Tobą</strong> w sprawie tematyki, której dotyczy materiał (drogą e-mailową lub telefoniczną).</li>
+    </ul>
+    <p><strong>Podstawa prawna:</strong> Twoja dobrowolna zgoda, czyli <strong>art. 6 ust. 1 lit. a RODO</strong> — wyrażasz ją, zaznaczając odpowiednie pole (checkbox) przed wysłaniem formularza. Bez zaznaczenia tego pola formularz nie zostanie wysłany.</p>
+    <p>Kontakt telefoniczny i e-mailowy odbywa się również na podstawie Twojej zgody, zgodnie z art. 172 ustawy Prawo telekomunikacyjne.</p>
+    <div class="note">
+      <p><strong>Twoje dane nie są sprzedawane, wynajmowane ani udostępniane innym podmiotom w celach marketingowych.</strong> Nie są rozsyłane do osób trzecich. Służą wyłącznie do przesłania materiału i kontaktu z Tobą.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="dobrowolnosc">
+    <h2 class="sec"><span class="n">04</span> Dobrowolność podania danych</h2>
+    <p>Podanie danych jest <strong>całkowicie dobrowolne</strong> — nie masz żadnego obowiązku ustawowego ani umownego, by je podać.</p>
+    <p>Podanie imienia, adresu e-mail i numeru telefonu jest jednak warunkiem skorzystania z formularza i otrzymania materiału — bez tych danych nie jestem w stanie zrealizować Twojego zgłoszenia ani się z Tobą skontaktować.</p>
+  </section>
+
+  <!-- 5 -->
+  <section id="okres">
+    <h2 class="sec"><span class="n">05</span> Jak długo przechowuję dane</h2>
+    <p>Twoje dane przechowuję <strong>do momentu wycofania przez Ciebie zgody</strong> — nie dłużej niż jest to potrzebne do celu, w jakim zostały zebrane.</p>
+    <p>Jeżeli w ciągu <strong>24 miesięcy</strong> od wysłania formularza nie dojdzie między nami do żadnego kontaktu, dane zostaną usunięte automatycznie.</p>
+    <p>Wycofanie zgody możesz zgłosić w każdej chwili — wystarczy wiadomość na adres e-mail podany w punkcie 1. Wycofanie zgody nie wpływa na zgodność z prawem przetwarzania, którego dokonano przed jej wycofaniem.</p>
+  </section>
+
+  <!-- 6 -->
+  <section id="odbiorcy">
+    <h2 class="sec"><span class="n">06</span> Komu dane są udostępniane</h2>
+    <p>Twoich danych <strong>nie sprzedaję i nie przekazuję innym osobom ani firmom</strong> w celach marketingowych. Korzystam natomiast z zewnętrznych narzędzi technicznych, które z natury rzeczy przetwarzają dane w moim imieniu (są tzw. podmiotami przetwarzającymi w rozumieniu art. 28 RODO):</p>
+    <ul>
+      <li><strong>Google Ireland Limited / Google LLC</strong> — dane z formularza zapisywane są w Arkuszach Google (Google Sheets) za pośrednictwem Google Apps Script. Google przechowuje je na swojej infrastrukturze na moje zlecenie.</li>
+      <li><strong>GitHub, Inc.</strong> — strona jest hostowana na GitHub Pages. Podczas jej wyświetlania GitHub może przetwarzać techniczne dane połączenia (np. adres IP).</li>
+      <li><strong>Google Fonts</strong> — strona pobiera kroje pisma z serwerów Google, co wiąże się z przekazaniem Twojego adresu IP do Google w momencie ładowania strony.</li>
+    </ul>
+    <p>Dane mogą też zostać udostępnione organom publicznym, jeżeli obowiązek taki będzie wynikał z przepisów prawa.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="eog">
+    <h2 class="sec"><span class="n">07</span> Przekazywanie danych poza EOG</h2>
+    <p>Ponieważ korzystam z usług Google i GitHub, Twoje dane mogą być przetwarzane również poza Europejskim Obszarem Gospodarczym, w tym w Stanach Zjednoczonych.</p>
+    <p>Odbywa się to na podstawie mechanizmów przewidzianych w RODO — w szczególności decyzji Komisji Europejskiej o odpowiednim stopniu ochrony (<strong>EU–U.S. Data Privacy Framework</strong>) oraz standardowych klauzul umownych, które gwarantują ochronę danych na poziomie zbliżonym do europejskiego.</p>
+  </section>
+
+  <!-- 8 -->
+  <section id="prawa">
+    <h2 class="sec"><span class="n">08</span> Twoje prawa</h2>
+    <p>W związku z przetwarzaniem Twoich danych przysługują Ci następujące prawa:</p>
+    <div class="rights">
+      <div class="right"><b>Prawo dostępu (art. 15 RODO)</b><span>Możesz dowiedzieć się, jakie dokładnie dane na Twój temat przechowuję, i otrzymać ich kopię.</span></div>
+      <div class="right"><b>Prawo do sprostowania (art. 16 RODO)</b><span>Jeśli Twoje dane są nieprawidłowe lub niekompletne — możesz żądać ich poprawienia.</span></div>
+      <div class="right"><b>Prawo do usunięcia, „prawo do bycia zapomnianym" (art. 17 RODO)</b><span>Możesz żądać całkowitego usunięcia swoich danych.</span></div>
+      <div class="right"><b>Prawo do ograniczenia przetwarzania (art. 18 RODO)</b><span>Możesz żądać, bym czasowo wstrzymał przetwarzanie Twoich danych.</span></div>
+      <div class="right"><b>Prawo do przenoszenia danych (art. 20 RODO)</b><span>Możesz otrzymać swoje dane w formacie nadającym się do odczytu maszynowego i przenieść je do innego administratora.</span></div>
+      <div class="right"><b>Prawo do cofnięcia zgody (art. 7 ust. 3 RODO)</b><span>Możesz wycofać zgodę w dowolnym momencie, bez podawania przyczyny — po jej wycofaniu przestanę przetwarzać Twoje dane.</span></div>
+      <div class="right"><b>Prawo sprzeciwu (art. 21 RODO)</b><span>Możesz wnieść sprzeciw wobec przetwarzania Twoich danych.</span></div>
+    </div>
+    <p style="margin-top:16px">Aby skorzystać z któregokolwiek z tych praw, wyślij wiadomość na adres e-mail podany w punkcie 1. Odpowiem bez zbędnej zwłoki, najpóźniej <strong>w ciągu miesiąca</strong> od otrzymania zgłoszenia. Realizacja tych praw jest bezpłatna.</p>
+  </section>
+
+  <!-- 9 -->
+  <section id="skarga">
+    <h2 class="sec"><span class="n">09</span> Prawo skargi do PUODO</h2>
+    <p>Jeżeli uważasz, że przetwarzam Twoje dane niezgodnie z prawem, masz prawo wnieść skargę do organu nadzorczego:</p>
+    <div class="card">
+      <div class="row"><span class="k">Organ</span><span class="v">Prezes Urzędu Ochrony Danych Osobowych (PUODO)</span></div>
+      <div class="row"><span class="k">Adres</span><span class="v">ul. Stawki 2, 00-193 Warszawa</span></div>
+      <div class="row"><span class="k">Strona</span><span class="v"><a class="link" href="https://uodo.gov.pl" target="_blank" rel="noopener">uodo.gov.pl</a></span></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="profilowanie">
+    <h2 class="sec"><span class="n">10</span> Profilowanie i decyzje automatyczne</h2>
+    <p>Twoje dane <strong>nie są profilowane</strong> ani wykorzystywane do zautomatyzowanego podejmowania decyzji, które wywoływałyby wobec Ciebie skutki prawne lub w podobny sposób istotnie na Ciebie wpływały (art. 22 RODO).</p>
+  </section>
+
+  <!-- 11 -->
+  <section id="cookies">
+    <h2 class="sec"><span class="n">11</span> Pliki cookies i dane techniczne</h2>
+    <p>Ta strona <strong>nie używa własnych plików cookies</strong> do celów analitycznych, marketingowych ani śledzących. Nie korzystam z Google Analytics, pikseli reklamowych ani narzędzi profilujących.</p>
+    <p>Podczas wyświetlania strony Twoja przeglądarka pobiera kroje pisma z serwerów Google Fonts oraz łączy się z serwerami GitHub Pages, na których strona jest hostowana — w tym zakresie przetwarzane mogą być standardowe dane techniczne połączenia (m.in. adres IP, typ przeglądarki). Jest to niezbędne do prawidłowego wyświetlenia strony.</p>
+    <p>Możesz w każdej chwili zmienić ustawienia swojej przeglądarki dotyczące plików cookies i danych witryn.</p>
+  </section>
+
+  <!-- 12 -->
+  <section id="bezpieczenstwo">
+    <h2 class="sec"><span class="n">12</span> Bezpieczeństwo danych</h2>
+    <p>Stosuję środki techniczne i organizacyjne odpowiednie do charakteru przetwarzanych danych, aby chronić je przed przypadkową utratą, nieuprawnionym dostępem, zmianą lub ujawnieniem.</p>
+    <p>Dane przesyłane są szyfrowanym połączeniem (HTTPS), a dostęp do arkusza, w którym są przechowywane, chroniony jest hasłem i ograniczony wyłącznie do administratora.</p>
+  </section>
+
+  <!-- 13 -->
+  <section id="zmiany">
+    <h2 class="sec"><span class="n">13</span> Zmiany polityki prywatności</h2>
+    <p>Polityka może być aktualizowana — na przykład w razie zmiany przepisów lub sposobu działania strony. Aktualna wersja jest zawsze dostępna pod tym adresem, a data ostatniej aktualizacji widnieje na górze dokumentu.</p>
+    <p>Zmiany nie ograniczą Twoich praw wynikających z RODO ani nie rozszerzą zakresu przetwarzania danych bez Twojej odrębnej zgody.</p>
+  </section>
+
+  <footer>
+    <div class="frow">
+      <p>© 2026 Olek · @callkeen</p>
+      <div style="display:flex;gap:22px">
+        <a href="index.html">Strona główna</a>
+        <a href="mailto:oleksalesbiznes@gmail.com">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
